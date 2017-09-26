@@ -41,5 +41,21 @@ class SortController extends ControllerBase {
       $array[$element['key']] = $element['value'];
     }
   }
+  
+  public static function associativeArraySortWithKey(&$array, $insideKey) {
+    $simpleArray = [];
+    foreach ($array as $key => $value) {
+      $simpleArray[] = [
+        'key' => $key,
+        'value' => $value,
+        'inside' => $value[$insideKey],
+      ];
+    }
+    self::bubleSort($simpleArray, 'inside');
+    $array = [];
+    foreach ($simpleArray as $element) {
+      $array[$element['key']] = $element['value'];
+    }
+  }
 
 }
