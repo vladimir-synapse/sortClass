@@ -15,7 +15,7 @@ class SortController extends ControllerBase {
     $array[$j] = $buf;
   }
 
-  public static function bubleSort(&$array, $key) {
+  public static function bubleSort(&$array, $key, $reverse = FALSE) {
     if (count($array) && isset($array[0][$key])) {
       for ($j = 1; $j < count($array); $j++) {
         for ($i = 0; $i < count($array) - $j; $i++) {
@@ -25,9 +25,12 @@ class SortController extends ControllerBase {
         }
       }
     }
+    if ($reverse) {
+      $array = array_reverse($array);
+    }
   }
 
-  public static function associativeArraySort(&$array) {
+  public static function associativeArraySort(&$array, $reverse = FALSE) {
     $simpleArray = [];
     foreach ($array as $key => $value) {
       $simpleArray[] = [
@@ -35,14 +38,14 @@ class SortController extends ControllerBase {
         'value' => $value,
       ];
     }
-    self::bubleSort($simpleArray, 'value');
+    self::bubleSort($simpleArray, 'value', $reverse);
     $array = [];
     foreach ($simpleArray as $element) {
       $array[$element['key']] = $element['value'];
     }
   }
-  
-  public static function associativeArraySortWithKey(&$array, $insideKey) {
+
+  public static function associativeArraySortWithKey(&$array, $insideKey, $reverse = FALSE) {
     $simpleArray = [];
     foreach ($array as $key => $value) {
       $simpleArray[] = [
@@ -51,7 +54,7 @@ class SortController extends ControllerBase {
         'inside' => $value[$insideKey],
       ];
     }
-    self::bubleSort($simpleArray, 'inside');
+    self::bubleSort($simpleArray, 'inside', $reverse);
     $array = [];
     foreach ($simpleArray as $element) {
       $array[$element['key']] = $element['value'];
